@@ -6,34 +6,45 @@
         x:Class="metatagger.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Width="500"
-        Height="600"
+        Height="620"
         Title="Meta Tag Editor"
         mc:Ignorable="d">
 
     <ScrollViewer>
+
         <StackPanel Margin="20" Spacing="10">
 
+            <!-- HEADER -->
+            <StackPanel Orientation="Horizontal" Spacing="10">
+
+                <Button Content="Load Audio File" Click="LoadAudioFile_Click"/>
+                <Button Content="Load Audio Folder"/>
+
+            </StackPanel>
+
+            <!-- MAIN TAG EDITING CONTROLS -->
             <TextBlock Text="Audio file" FontWeight="Bold"/>
-            <TextBox Text="{Binding FilePath}" Watermark="Path to audio file"/>
-            <Button Content="Browse audio file"/>
+            <TextBox IsEnabled="{Binding IsFileLoaded}" Text="{Binding FilePath}" Watermark="Path to audio file" />
+            <Button IsEnabled="{Binding IsFileLoaded}" Content="Browse audio file"/>
 
             <TextBlock Text="Title" FontWeight="Bold"/>
-            <TextBox Text="{Binding Title}" />
+            <TextBox IsEnabled="{Binding IsFileLoaded}" Text="{Binding Title}" />
 
             <TextBlock Text="Author" FontWeight="Bold"/>
-            <TextBox Text="{Binding Author}" />
+            <TextBox IsEnabled="{Binding IsFileLoaded}" Text="{Binding Author}" />
 
             <TextBlock Text="Description" FontWeight="Bold"/>
             <TextBox Text="{Binding Description}"
                      AcceptsReturn="True"
                      Height="100"
-                     TextWrapping="Wrap"/>
+                     TextWrapping="Wrap"
+                     IsEnabled="{Binding IsFileLoaded}" />
 
             <TextBlock Text="Cover image" FontWeight="Bold"/>
-            <TextBox Text="{Binding CoverPath}" Watermark="Path to JPG cover"/>
-            <Button Content="Browse JPG"/>
+            <TextBox IsEnabled="{Binding IsFileLoaded}" Text="{Binding CoverPath}" Watermark="Path to JPG cover"/>
+            <Button IsEnabled="{Binding IsFileLoaded}" Content="Browse JPG"/>
 
-            <Button Content="Save Tags"/>
+            <Button IsEnabled="{Binding IsFileLoaded}" Content="Save Tags"/>
         </StackPanel>
     </ScrollViewer>
 </Window>
