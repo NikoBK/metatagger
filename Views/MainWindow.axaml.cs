@@ -50,6 +50,7 @@ public partial class MainWindow : Window
 
         vm.Title = audioFile.Tag.Title ?? "";
         vm.Author = audioFile.Tag.FirstPerformer ?? "";
+        vm.Album = audioFile.Tag.Album ?? "";
         vm.Description = audioFile.Tag.Comment ?? "";
 
         if (audioFile.Tag.Pictures.Length > 0)
@@ -118,5 +119,100 @@ public partial class MainWindow : Window
 
         using var stream = System.IO.File.OpenRead(path);
         vm.CoverImage = new Bitmap(stream);
+    }
+
+    private void SaveTags_Click(object? sender, RoutedEventArgs e)
+    {
+        var vm = (MainWindowViewModel)DataContext!;
+
+        if (vm.IsFolderLoaded)
+        {
+            string path = vm.FolderPath == null ? "" : vm.FolderPath;
+
+            if (string.IsNullOrEmpty(path)) {
+                return;
+            }
+
+            var files = Directory.GetFiles(path);
+
+            foreach (var fPath in files)
+            {
+                try
+                {
+                    var audioFile = TagLib.File.Create(fPath);
+
+                    if (ValidateField(vm.Title)) {
+                        audioFile.Tag.Title= vm.Title;
+                    }
+
+                    if (ValidateField(vm.Author) && vm.Author != null) {
+                        string? author = vm.Author.Replace(", ", ",");
+                        string[] performers = vm.Author.Split(',');
+
+                        if (performers.Length > 0) {
+                            audioFile.Tag.Performers = performers;
+                        }
+                    }
+
+                    if (ValidateField(vm.Album)) {
+                        audioFile.Tag.Album = vm.Album;
+                    }
+
+                    if (ValidateField(vm.Description)) {
+                        audioFile.Tag.Album = vm.Description;
+                    }
+
+                    audioFile.Save();
+                }
+                catch {
+                    // skip files that TagLibSharp can't open
+                }
+            }
+        }
+        else
+        {
+            string path = vm.FilePath == null ? "" : vm.FilePath;
+
+            if (string.IsNullOrEmpty(path)) {
+                return;
+            }
+
+            var audioFile = TagLib.File.Create(path);
+
+            if (ValidateField(vm.Title)) {
+                audioFile.Tag.Title= vm.Title;
+            }
+
+            if (ValidateField(vm.Author) && vm.Author != null) {
+                string? author = vm.Author.Replace(", ", ",");
+                string[] performers = vm.Author.Split(',');
+
+                if (performers.Length > 0) {
+                    audioFile.Tag.Performers = performers;
+                }
+            }
+
+            if (ValidateField(vm.Album)) {
+                audioFile.Tag.Album = vm.Album;
+            }
+
+            if (ValidateField(vm.Description)) {
+                audioFile.Tag.Album = vm.Description;
+            }
+
+            audioFile.Save();
+        }
+    }
+
+    // Checks whether or not the given string is null, whitespace or empty space.
+    private bool ValidateField(string? context) {
+        if (string.IsNullOrEmpty(context)) {
+            return false;
+        }
+        if (string.IsNullOrWhiteSpace(context)) {
+            return false;
+        }
+
+        return true;
     }
 }

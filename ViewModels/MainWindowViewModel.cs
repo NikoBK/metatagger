@@ -18,6 +18,12 @@ public partial class MainWindowViewModel : ViewModelBase
         set => SetProperty(ref _author, value);
     }
 
+    public string? _album;
+    public string? Album {
+        get => _album;
+        set => SetProperty(ref _album, value);
+    }
+
     public string? _description;
     public string? Description {
         get => _description;

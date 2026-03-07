@@ -6,7 +6,7 @@
         x:Class="metatagger.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Width="500"
-        Height="800"
+        Height="830"
         Title="Meta Tag Editor"
         mc:Ignorable="d">
 
@@ -33,6 +33,9 @@
             <TextBlock Text="Author" FontWeight="Bold"/>
             <TextBox IsEnabled="{Binding IsFileLoaded}" Text="{Binding Author}" />
 
+            <TextBlock Text="Album" FontWeight="Bold"/>
+            <TextBox IsEnabled="{Binding IsFileLoaded}" Text="{Binding Album}" />
+
             <TextBlock Text="Description" FontWeight="Bold"/>
             <TextBox Text="{Binding Description}"
                      AcceptsReturn="True"
@@ -48,7 +51,7 @@
 
             <Button IsEnabled="{Binding IsFileLoaded}" Content="Browse JPG" Click="BrowseCover_Click"/>
 
-            <Button IsEnabled="{Binding IsFileLoaded}" Content="Save Tags"/>
+            <Button IsEnabled="{Binding IsFileLoaded}" Content="Save Tags" Click="SaveTags_Click"/>
         </StackPanel>
     </ScrollViewer>
 </Window>
