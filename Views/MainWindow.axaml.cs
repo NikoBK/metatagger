@@ -94,10 +94,7 @@ public partial class MainWindow : Window
         var vm = (MainWindowViewModel)DataContext!;
         vm.CoverPath = path;
 
-        var audioFile = TagLib.File.Create(path);
-
-
-
-
+        using var stream = System.IO.File.OpenRead(path);
+        vm.CoverImage = new Bitmap(stream);
     }
 }
