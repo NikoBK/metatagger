@@ -18,7 +18,7 @@
             <StackPanel Orientation="Horizontal" Spacing="10">
 
                 <Button Content="Load Audio File" Click="LoadAudioFile_Click"/>
-                <Button Content="Load Audio Folder"/>
+                <Button Content="Load Audio Folder" Click="LoadAudioFolder_Click"/>
 
             </StackPanel>
 

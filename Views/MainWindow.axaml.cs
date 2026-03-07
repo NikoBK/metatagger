@@ -67,6 +67,28 @@ public partial class MainWindow : Window
         vm.IsFileLoaded = true;
     }
 
+    private async void LoadAudioFolder_Click(object? sender, RoutedEventArgs e)
+    {
+        var folders = await StorageProvider.OpenFolderPickerAsync(new FolderPickerOpenOptions
+        {
+            Title = "Select audio folder",
+            AllowMultiple = false
+        });
+
+        if (folders.Count == 0)
+            return;
+
+        var folderPath = folders[0].TryGetLocalPath();
+        if (string.IsNullOrEmpty(folderPath))
+            return;
+
+        var vm = (MainWindowViewModel)DataContext!;
+
+        vm.FolderPath = folderPath;
+        vm.IsFolderLoaded = true;
+        vm.IsFileLoaded = true;
+    }
+
     private async void BrowseCover_Click(object? sender, RoutedEventArgs e)
     {
         var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions

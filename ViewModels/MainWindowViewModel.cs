@@ -4,12 +4,8 @@ namespace metatagger.ViewModels;
 
 public partial class MainWindowViewModel : ViewModelBase
 {
-    public string? _filePath;
-    public string? FilePath {
-        get => _filePath;
-        set => SetProperty(ref _filePath, value);
-    }
 
+    // META DISPLAY DATA
     public string? _title;
     public string? Title {
         get => _title;
@@ -28,10 +24,10 @@ public partial class MainWindowViewModel : ViewModelBase
         set => SetProperty(ref _description, value);
     }
 
-    public string? _coverPath;
-    public string? CoverPath {
-        get => _coverPath;
-        set => SetProperty(ref _coverPath, value);
+    public string? _filePath;
+    public string? FilePath {
+        get => _filePath;
+        set => SetProperty(ref _filePath, value);
     }
 
     private Bitmap? _coverImage;
@@ -41,15 +37,26 @@ public partial class MainWindowViewModel : ViewModelBase
         set => SetProperty(ref _coverImage, value);
     }
 
+    // FILE DATA
+    public string? _coverPath;
+    public string? CoverPath {
+        get => _coverPath;
+        set => SetProperty(ref _coverPath, value);
+    }
+
+    private string? _folderPath;
+    public string? FolderPath
+    {
+        get => _folderPath;
+        set => SetProperty(ref _folderPath, value);
+    }
+
+    // EDITOR PROPERTIES
     private bool _isFileLoaded;
     public bool IsFileLoaded {
         get => _isFileLoaded;
         set => SetProperty(ref _isFileLoaded, value);
     }
 
-    private bool _isFolderLoaded;
-    public bool IsFolderLoaded {
-        get => _isFolderLoaded;
-        set => SetProperty(ref _isFolderLoaded, value);
-    }
+    public bool IsFolderLoaded = false;
 }
