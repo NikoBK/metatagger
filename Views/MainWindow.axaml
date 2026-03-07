@@ -6,7 +6,7 @@
         x:Class="metatagger.Views.MainWindow"
         x:DataType="vm:MainWindowViewModel"
         Width="500"
-        Height="620"
+        Height="800"
         Title="Meta Tag Editor"
         mc:Ignorable="d">
 
@@ -41,8 +41,12 @@
                      IsEnabled="{Binding IsFileLoaded}" />
 
             <TextBlock Text="Cover image" FontWeight="Bold"/>
-            <TextBox IsEnabled="{Binding IsFileLoaded}" Text="{Binding CoverPath}" Watermark="Path to JPG cover"/>
-            <Button IsEnabled="{Binding IsFileLoaded}" Content="Browse JPG"/>
+
+            <Border Width="200" Height="200" BorderBrush="White" BorderThickness="2" Padding="4">
+                <Image Source="{Binding CoverImage}" Stretch="Uniform"/>
+            </Border>
+
+            <Button IsEnabled="{Binding IsFileLoaded}" Content="Browse JPG" Click="BrowseCover_Click"/>
 
             <Button IsEnabled="{Binding IsFileLoaded}" Content="Save Tags"/>
         </StackPanel>

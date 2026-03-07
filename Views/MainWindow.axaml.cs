@@ -6,6 +6,9 @@ using Avalonia.Platform.Storage;
 using metatagger.ViewModels;
 using TagLib;
 
+using System.IO;
+using Avalonia.Media.Imaging;
+
 namespace metatagger.Views;
 
 public partial class MainWindow : Window
@@ -31,16 +34,13 @@ public partial class MainWindow : Window
         });
 
         if (files.Count == 0) {
-            Console.WriteLine("Error reading!");
             return;
-        }
-        else {
-            Console.WriteLine("Success!");
         }
 
         var path = files[0].TryGetLocalPath();
-        if (string.IsNullOrEmpty(path))
+        if (string.IsNullOrEmpty(path)) {
             return;
+        }
 
         var vm = (MainWindowViewModel)DataContext!;
 
@@ -52,7 +52,52 @@ public partial class MainWindow : Window
         vm.Author = audioFile.Tag.FirstPerformer ?? "";
         vm.Description = audioFile.Tag.Comment ?? "";
 
+        if (audioFile.Tag.Pictures.Length > 0)
+        {
+            var picData = audioFile.Tag.Pictures[0].Data.Data;
+
+            using var ms = new MemoryStream(picData);
+            vm.CoverImage = new Bitmap(ms);
+        }
+        else
+        {
+            vm.CoverImage = null;
+        }
+
         vm.IsFileLoaded = true;
-        Console.WriteLine($"fileloaded set to: {vm.IsFileLoaded}");
+    }
+
+    private async void BrowseCover_Click(object? sender, RoutedEventArgs e)
+    {
+        var files = await StorageProvider.OpenFilePickerAsync(new FilePickerOpenOptions
+        {
+            Title = "Select cover image",
+            AllowMultiple = false,
+            FileTypeFilter = new[]
+            {
+                new FilePickerFileType("Images")
+                {
+                    Patterns = new[] { "*.jpg", "*.png", "*.jpeg", "*.PNG" }
+                }
+            }
+        });
+
+        if (files.Count == 0) {
+            return;
+        }
+
+        var path = files[0].TryGetLocalPath();
+        if (string.IsNullOrEmpty(path)) {
+            return;
+        }
+
+        var vm = (MainWindowViewModel)DataContext!;
+        vm.CoverPath = path;
+
+        var audioFile = TagLib.File.Create(path);
+
+
+
+
     }
 }
