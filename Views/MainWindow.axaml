@@ -29,7 +29,7 @@
             <TextBlock Text="Title" FontWeight="Bold"/>
             <TextBox IsEnabled="{Binding IsFileLoaded}" Text="{Binding Title}" />
 
-            <TextBlock Text="Author" FontWeight="Bold"/>
+            <TextBlock Text="Composers (comma-seperated)" FontWeight="Bold"/>
             <TextBox IsEnabled="{Binding IsFileLoaded}" Text="{Binding Author}" />
 
             <TextBlock Text="Album" FontWeight="Bold"/>
