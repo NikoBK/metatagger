@@ -25,7 +25,6 @@
             <!-- MAIN TAG EDITING CONTROLS -->
             <TextBlock Text="Audio file" FontWeight="Bold"/>
             <TextBox IsEnabled="{Binding IsFileLoaded}" Text="{Binding FilePath}" Watermark="Path to audio file" />
-            <Button IsEnabled="{Binding IsFileLoaded}" Content="Browse audio file"/>
 
             <TextBlock Text="Title" FontWeight="Bold"/>
             <TextBox IsEnabled="{Binding IsFileLoaded}" Text="{Binding Title}" />
