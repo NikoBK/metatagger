@@ -6,6 +6,8 @@ using Avalonia.Platform.Storage;
 using metatagger.ViewModels;
 using TagLib;
 
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using Avalonia.Media.Imaging;
 
@@ -162,6 +164,22 @@ public partial class MainWindow : Window
                         audioFile.Tag.Album = vm.Description;
                     }
 
+                    if (vm.CoverImage != null)
+                    {
+                        using var ms = new MemoryStream();
+
+                        vm.CoverImage.Save(ms);
+
+                        var pic = new Picture(new ByteVector(ms.ToArray()))
+                        {
+                            Type = PictureType.FrontCover,
+                            MimeType = "image/jpeg"
+                        };
+
+                        audioFile.Tag.Pictures = new IPicture[] { pic };
+                        audioFile.Save();
+                    }
+
                     audioFile.Save();
                 }
                 catch {
@@ -198,6 +216,22 @@ public partial class MainWindow : Window
 
             if (ValidateField(vm.Description)) {
                 audioFile.Tag.Album = vm.Description;
+            }
+
+            if (vm.CoverImage != null)
+            {
+                using var ms = new MemoryStream();
+
+                vm.CoverImage.Save(ms);
+
+                var pic = new Picture(new ByteVector(ms.ToArray()))
+                {
+                    Type = PictureType.FrontCover,
+                    MimeType = "image/jpeg"
+                };
+
+                audioFile.Tag.Pictures = new IPicture[] { pic };
+                audioFile.Save();
             }
 
             audioFile.Save();
