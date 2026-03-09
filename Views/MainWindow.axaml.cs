@@ -161,7 +161,7 @@ public partial class MainWindow : Window
                     }
 
                     if (ValidateField(vm.Description)) {
-                        audioFile.Tag.Album = vm.Description;
+                        audioFile.Tag.Description = vm.Description;
                     }
 
                     if (vm.CoverImage != null)
